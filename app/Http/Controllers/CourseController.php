@@ -19,9 +19,21 @@ class CourseController extends Controller
     public function show(int $id)
     {
         $course = Course::where('id', $id)->with('episodes')->first();
+        $watched = auth()->user()->episodes;
 
         return Inertia::render('Courses/show', [
-            'course' => $course
+            'course' => $course,
+            'watched' => $watched
         ]);
+    }
+
+    public function progress(Request $request)
+    {
+       $id = $request->input('episodeId');
+       $user = auth()->user();
+
+       $user->episodes()->toggle($id);// * toggle-> enregistre l'id dans la table completed si id existe ou non
+
+        return $user->episodes;
     }
 }

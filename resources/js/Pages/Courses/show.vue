@@ -2,14 +2,19 @@
     <app-layout>
         <template #header>{{ course.title }}</template>
         <div class="py-6">
-            <iframe class="w-full h-screen" :src="course.episodes[this.currentKey].video_url" frameborder="0"></iframe>
+            <iframe class="w-full h-screen p-7" :src="course.episodes[this.currentKey].video_url" frameborder="0"></iframe>
             <div class="text-sm text-gray-500">{{ course.episodes[this.currentKey].description }}</div>
-            <div class="mt-6 bg-gray-200 rounded shadow">
+            <div class="mt-6 bg-gray-200 p-6 rounded shadow">
                 <h3>Episodes :</h3>
                 <ul v-for="(episode, index) in this.course.episodes">
-                    <li class="mt-3">{{ episode.title }}
-                        <button class="text-gray-500 focus:text-indigo-500 focus:outline-none" @click="switchEpisode(index)">Voir l'épisode
-                        </button>
+                    <li class="mt-3 flex justify-between items-center">
+                        <div>
+                            {{ episode.title }}
+                            <button class="text-gray-500 focus:text-indigo-500 focus:outline-none"
+                                    @click="switchEpisode(index)">Voir l'épisode
+                            </button>
+                        </div>
+                        <progress-btn :episode-id="episode.id" :watched-episode="watched"></progress-btn>
                     </li>
                 </ul>
             </div>
@@ -19,14 +24,15 @@
 
 <script>
 import AppLayout from "@/Layouts/AppLayout";
+import progressBtn from "@/Pages/Courses/progressBtn";
 
 export default {
     components: {
-        AppLayout
-
+        AppLayout,
+        progressBtn
     },
 
-    props: ['course'],
+    props: ['course', 'watched'],
 
     data() {
         return {

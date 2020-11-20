@@ -3485,6 +3485,65 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/Pages/Courses/progressBtn.vue?vue&type=script&lang=js&":
+/*!*************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/Pages/Courses/progressBtn.vue?vue&type=script&lang=js& ***!
+  \*************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ __webpack_exports__["default"] = ({
+  props: ['episodeId', 'watchedEpisode'],
+  data: function data() {
+    return {
+      watchedEp: this.watchedEpisode,
+      isWatchedEp: false
+    };
+  },
+  methods: {
+    toggleProgress: function toggleProgress() {
+      var _this = this;
+
+      axios.post('/progress', {
+        episodeId: this.episodeId
+      }).then(function (response) {
+        if (response.status === 200) {
+          _this.isWatchedEp = !_this.isWatchedEp;
+        }
+      })["catch"](function (error) {
+        return console.log(error);
+      });
+    },
+    isWatched: function isWatched() {
+      var _this2 = this;
+
+      return !!this.watchedEpisode.find(function (element) {
+        return element.id === _this2.episodeId;
+      });
+    }
+  },
+  computed: {
+    classObject: function classObject() {
+      return this.isWatchedEp ? 'bg-green-500' : 'bg-blue-500';
+    }
+  },
+  mounted: function mounted() {
+    this.isWatchedEp = this.isWatched();
+  }
+});
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/Pages/Courses/show.vue?vue&type=script&lang=js&":
 /*!******************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/Pages/Courses/show.vue?vue&type=script&lang=js& ***!
@@ -3495,6 +3554,12 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Layouts_AppLayout__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @/Layouts/AppLayout */ "./resources/js/Layouts/AppLayout.vue");
+/* harmony import */ var _Pages_Courses_progressBtn__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @/Pages/Courses/progressBtn */ "./resources/js/Pages/Courses/progressBtn.vue");
+//
+//
+//
+//
+//
 //
 //
 //
@@ -3515,11 +3580,13 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 
+
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
-    AppLayout: _Layouts_AppLayout__WEBPACK_IMPORTED_MODULE_0__["default"]
+    AppLayout: _Layouts_AppLayout__WEBPACK_IMPORTED_MODULE_0__["default"],
+    progressBtn: _Pages_Courses_progressBtn__WEBPACK_IMPORTED_MODULE_1__["default"]
   },
-  props: ['course'],
+  props: ['course', 'watched'],
   data: function data() {
     return {
       courseShow: this.course,
@@ -47767,6 +47834,50 @@ render._withStripped = true
 
 /***/ }),
 
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/Pages/Courses/progressBtn.vue?vue&type=template&id=e4961a02&":
+/*!*****************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/Pages/Courses/progressBtn.vue?vue&type=template&id=e4961a02& ***!
+  \*****************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", [
+    _c(
+      "button",
+      {
+        staticClass: "bg-green-500 px-2 py-2 text-white rounded",
+        class: _vm.classObject,
+        on: {
+          click: function($event) {
+            return _vm.toggleProgress()
+          }
+        }
+      },
+      [
+        _vm._v(
+          "\n        " +
+            _vm._s(this.isWatchedEp ? "Terminé" : "Continuer ?") +
+            "\n    "
+        )
+      ]
+    )
+  ])
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
 /***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/Pages/Courses/show.vue?vue&type=template&id=827951c6&":
 /*!**********************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/Pages/Courses/show.vue?vue&type=template&id=827951c6& ***!
@@ -47799,7 +47910,7 @@ var render = function() {
       _vm._v(" "),
       _c("div", { staticClass: "py-6" }, [
         _c("iframe", {
-          staticClass: "w-full h-screen",
+          staticClass: "w-full h-screen p-7",
           attrs: {
             src: _vm.course.episodes[this.currentKey].video_url,
             frameborder: "0"
@@ -47812,28 +47923,46 @@ var render = function() {
         _vm._v(" "),
         _c(
           "div",
-          { staticClass: "mt-6 bg-gray-200 rounded shadow" },
+          { staticClass: "mt-6 bg-gray-200 p-6 rounded shadow" },
           [
             _c("h3", [_vm._v("Episodes :")]),
             _vm._v(" "),
             _vm._l(this.course.episodes, function(episode, index) {
               return _c("ul", [
-                _c("li", { staticClass: "mt-3" }, [
-                  _vm._v(_vm._s(episode.title) + "\n                    "),
-                  _c(
-                    "button",
-                    {
-                      staticClass:
-                        "text-gray-500 focus:text-indigo-500 focus:outline-none",
-                      on: {
-                        click: function($event) {
-                          return _vm.switchEpisode(index)
-                        }
+                _c(
+                  "li",
+                  { staticClass: "mt-3 flex justify-between items-center" },
+                  [
+                    _c("div", [
+                      _vm._v(
+                        "\n                        " +
+                          _vm._s(episode.title) +
+                          "\n                        "
+                      ),
+                      _c(
+                        "button",
+                        {
+                          staticClass:
+                            "text-gray-500 focus:text-indigo-500 focus:outline-none",
+                          on: {
+                            click: function($event) {
+                              return _vm.switchEpisode(index)
+                            }
+                          }
+                        },
+                        [_vm._v("Voir l'épisode\n                        ")]
+                      )
+                    ]),
+                    _vm._v(" "),
+                    _c("progress-btn", {
+                      attrs: {
+                        "episode-id": episode.id,
+                        "watched-episode": _vm.watched
                       }
-                    },
-                    [_vm._v("Voir l'épisode\n                    ")]
-                  )
-                ])
+                    })
+                  ],
+                  1
+                )
               ])
             })
           ],
@@ -62897,6 +63026,8 @@ var map = {
 	"./Courses/": "./resources/js/Pages/Courses/index.vue",
 	"./Courses/index": "./resources/js/Pages/Courses/index.vue",
 	"./Courses/index.vue": "./resources/js/Pages/Courses/index.vue",
+	"./Courses/progressBtn": "./resources/js/Pages/Courses/progressBtn.vue",
+	"./Courses/progressBtn.vue": "./resources/js/Pages/Courses/progressBtn.vue",
 	"./Courses/show": "./resources/js/Pages/Courses/show.vue",
 	"./Courses/show.vue": "./resources/js/Pages/Courses/show.vue",
 	"./Dashboard": "./resources/js/Pages/Dashboard.vue",
@@ -63139,6 +63270,75 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_index_vue_vue_type_template_id_5d989362___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_index_vue_vue_type_template_id_5d989362___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./resources/js/Pages/Courses/progressBtn.vue":
+/*!****************************************************!*\
+  !*** ./resources/js/Pages/Courses/progressBtn.vue ***!
+  \****************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _progressBtn_vue_vue_type_template_id_e4961a02___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./progressBtn.vue?vue&type=template&id=e4961a02& */ "./resources/js/Pages/Courses/progressBtn.vue?vue&type=template&id=e4961a02&");
+/* harmony import */ var _progressBtn_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./progressBtn.vue?vue&type=script&lang=js& */ "./resources/js/Pages/Courses/progressBtn.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _progressBtn_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _progressBtn_vue_vue_type_template_id_e4961a02___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _progressBtn_vue_vue_type_template_id_e4961a02___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/Pages/Courses/progressBtn.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/Pages/Courses/progressBtn.vue?vue&type=script&lang=js&":
+/*!*****************************************************************************!*\
+  !*** ./resources/js/Pages/Courses/progressBtn.vue?vue&type=script&lang=js& ***!
+  \*****************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_progressBtn_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./progressBtn.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/Pages/Courses/progressBtn.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_progressBtn_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/Pages/Courses/progressBtn.vue?vue&type=template&id=e4961a02&":
+/*!***********************************************************************************!*\
+  !*** ./resources/js/Pages/Courses/progressBtn.vue?vue&type=template&id=e4961a02& ***!
+  \***********************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_progressBtn_vue_vue_type_template_id_e4961a02___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib??vue-loader-options!./progressBtn.vue?vue&type=template&id=e4961a02& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/Pages/Courses/progressBtn.vue?vue&type=template&id=e4961a02&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_progressBtn_vue_vue_type_template_id_e4961a02___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_progressBtn_vue_vue_type_template_id_e4961a02___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 
