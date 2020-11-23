@@ -26,6 +26,7 @@ export default {
                     .then(response => {
                         if (response.status === 200) {
                             this.isWatchedEp = !this.isWatchedEp
+                            eventBus.$emit('progress', response.data)
                         }
                     })
                     .catch(error => console.log(error));

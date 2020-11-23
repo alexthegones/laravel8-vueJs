@@ -4,6 +4,9 @@
         <div class="py-6">
             <iframe class="w-full h-screen p-7" :src="course.episodes[this.currentKey].video_url" frameborder="0"></iframe>
             <div class="text-sm text-gray-500">{{ course.episodes[this.currentKey].description }}</div>
+            <div class="py-6">
+                <progress-bar v-bind:watched-episodes="watched" :episodes="course.episodes"></progress-bar>
+            </div>
             <div class="mt-6 bg-gray-200 p-6 rounded shadow">
                 <h3>Episodes :</h3>
                 <ul v-for="(episode, index) in this.course.episodes">
@@ -25,11 +28,13 @@
 <script>
 import AppLayout from "@/Layouts/AppLayout";
 import progressBtn from "@/Pages/Courses/progressBtn";
+import progressBar from "@/Pages/Courses/progressBar";
 
 export default {
     components: {
         AppLayout,
-        progressBtn
+        progressBtn,
+        progressBar
     },
 
     props: ['course', 'watched'],
